@@ -1,182 +1,52 @@
-## EX-6 :BMI Calculator
-## NAME : N NAVYA SREE
-## REG NO : 212223040138
-
-
-
+# Ex06 BMI Calculator
+## Date: 28-05-26
+# NAME N NAVYA SREE
 ## AIM
-To develop a responsive and interactive Body Mass Index (BMI) Calculator using React that allows users to input their height and weight, and calculates their BMI to categorize their health status (e.g., Underweight, Normal, Overweight, Obese).
+To create a BMI calculator using React Router 
 
-## DESIGN STEPS
+## ALGORITHM
+### STEP 1 State Initialization
+Manage the current page (Home or Calculator) using React Router.
 
-### STEP 1: Initialize React Project
+### STEP 2 User Input
+Accept weight and height inputs from the user.
 
-<li>Create a new React app using create-react-app.</li>
-<li>Install React Router using:</li># Ex06 BMI Calculator
-## Date: 28/05/2025
+### STEP 3 BMI Calculation
+Calculate the BMI based on user input.
 
-## AIM
-To develop a responsive and interactive Body Mass Index (BMI) Calculator using React that allows users to input their height and weight, and calculates their BMI to categorize their health status (e.g., Underweight, Normal, Overweight, Obese).
+### STEP 4 Categorization
+Classify the BMI result into categories (Underweight, Normal weight, Overweight, Obesity).
 
-## DESIGN STEPS
-
-### STEP 1: Initialize React Project
-
-<li>Create a new React app using create-react-app.</li>
-<li>Install React Router using:</li>
-npm install react-router-dom
-
-### STEP 2: Set Up Routing
-
-Create routing structure with react-router-dom:
-
-<li>Home route (/) – Intro or Navigation</li>
-
-<li>BMI Calculator route (/bmi)</li>
-
-<li>Result route (/result)</li>
-
-### STEP 3: Design the BMI Form Page
-
-<li>Create a form to accept Height (in cm or m) and Weight (in kg).</li>
-
-<li>On form submit, navigate to the result page with entered values via URL query params or context/state.</li>
-
-## STEP 4: Handle Input Validation
-
-<li>Check if height and weight are valid numbers.</li>
-
-<li>Optionally, show error messages for invalid inputs.</li>
-
-### STEP 5: Perform BMI Calculation
-
-<li>In the result component:
-
-<li>Extract height and weight from the route (URL or passed state).</li>
-
-<li>Apply the BMI formula:</li>
-
-![image](https://github.com/user-attachments/assets/ec785506-c96b-489e-8783-fb1a5d36101a)
-​
- 
-<li>Convert height from cm to m if needed.</li></li>
-
-### STEP 6: Display Result
-
-<li>Show calculated BMI.</li>
-
-<li>Show category based on BMI range:
-
-<li>Underweight, Normal, Overweight, Obese, etc.</li></li>
-
-### STEP 7: Navigation Options
-
-<li>Provide a button to go back to the BMI form to calculate again.</li>
-
-### STEP 8: Enhancements
-
-<li>Add styling using CSS or Tailwind.</li>
+### STEP 5 Navigation
+Navigate between pages using React Router.
 
 ## PROGRAM
 
-### App.js
+### App.jsx
 ```
-import React, { useState } from 'react';   
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';  
-import './App.css';
-
-function Home() {
-  return (
-    <div className="home">
-      <h1>Welcome to the BMI Calculator</h1>
-      <Link to="/calculator">
-        <button>Go to Calculator</button>
-      </Link>
-    </div>
-  );
-}
-
-function Calculator() {
-  const [weight, setWeight] = useState('');
-  const [height, setHeight] = useState('');
-  const [bmi, setBmi] = useState(null);
-  const [category, setCategory] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-     const weightValue = parseFloat(weight);
-    const heightValue = parseFloat(height);
-
-     if (isNaN(weightValue) || isNaN(heightValue) || heightValue <= 0) {
-      alert('Please enter valid weight and height');
-      return;
-    }
-
-     const bmiValue = (weightValue / (heightValue * heightValue)).toFixed(2);
-    setBmi(bmiValue);
-
-     if (bmiValue < 18.5) {
-      setCategory('Underweight');
-    } else if (bmiValue >= 18.5 && bmiValue < 24.9) {
-      setCategory('Normal weight');
-    } else if (bmiValue >= 25 && bmiValue < 29.9) {
-      setCategory('Overweight');
-    } else {
-      setCategory('Obesity');
-    }
-  };
-
-  return (
-    <div className="calculator">
-      <h2>BMI Calculator</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Weight (kg):
-          <input
-            type="number"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            required
-            step="0.1"  
-          />
-        </label>
-        <br />
-        <label>
-          Height (m):
-          <input
-            type="number"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            required
-            step="0.01" 
-          />
-        </label>
-        <br />
-        <button type="submit">Calculate BMI</button>
-      </form>
-      {bmi && (
-        <div>
-          <h3>Your BMI: {bmi}</h3>
-          <p>Category: {category}</p>
-        </div>
-      )}
-      <Link to="/">Go to Home</Link>
-      <footer className="footer">
-        <p>&copy; 2025 BMI Calculator. All rights reserved.</p>
-      </footer>
-    </div>
-  );
-}
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./components/Home.jsx";
+import BMICalculator from "./components/bmi.jsx";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/calculator" element={<Calculator />} />
-      </Routes>
-    </Router>
+    <>
+      <nav className="navbar">
+        <h2 className="logo">BMI App</h2>
+        <div className="nav-links">
+          <Link to="/">Home</Link>
+          <Link to="/calculator">Calculator</Link>
+        </div>
+      </nav>
+
+      <div className="page-wrapper">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/calculator" element={<BMICalculator />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
@@ -185,169 +55,417 @@ export default App;
 
 ### App.css
 ```
- * {
+/* ----------------------------------------------------
+   GLOBAL STYLES — Clean, Light, Premium
+---------------------------------------------------- */
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Inter", system-ui, sans-serif;
 }
 
 body {
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #5f2c82, #49a09d);
-  color: #fff;
-  height: 100vh;
+  background: linear-gradient(to right, #e3fdfd, #cbf1f5, #a6e3e9, #71c9ce);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+  overflow-x: hidden;
+}
+
+/* Page wrapper ensures content doesn't sit behind navbar */
+.page-wrapper {
+  width: 100%;
+  padding-top: 130px;
+  display: flex;
+  justify-content: center;
+}
+
+
+/* ----------------------------------------------------
+   NAVBAR
+---------------------------------------------------- */
+
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 14px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(242, 229, 229, 0.4);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1269ba;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
   align-items: center;
 }
 
-.home {
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);  
-  padding: 50px;
-  border-radius: 15px;
-  width: 70%;
-  max-width: 400px;
+.nav-links a {
+  margin-left: 18px;
+  padding: 8px 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #124d7b;
+  text-decoration: none;
+  transition: 0.25s ease;
+  border-radius: 8px;
 }
 
-.home h1 {
+.nav-links a:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.nav-links .active {
+  background: #28c3b8;
+  color: white !important;
+}
+
+
+/* ----------------------------------------------------
+   CONTAINER (Centering Layout)
+---------------------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  margin: auto;
+  padding: 0 20px;
+}
+
+
+/* ----------------------------------------------------
+   TITLES
+---------------------------------------------------- */
+
+.title,
+h1 {
+  color: #1269ba;
+  text-align: center;
+  font-weight: 800;
+  font-size: 2.3rem;
+  margin-bottom: 20px;
+}
+
+
+/* ----------------------------------------------------
+   CARD — Glassmorphism
+---------------------------------------------------- */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.45);
+  padding: 35px;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  margin: auto;
+}
+
+
+/* ----------------------------------------------------
+   INPUT GROUP
+---------------------------------------------------- */
+
+.input-group {
+  text-align: left;
+  margin-bottom: 18px;
+  width: 100%;
+}
+
+.input-group label {
+  font-size: 14px;
+  color: #035c63;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  margin-top: 5px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #fff;
+  font-size: 15px;
+  box-shadow: 0 0 0 2px transparent;
+  transition: 0.25s;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #28c3b855;
+}
+
+
+/* ----------------------------------------------------
+   BUTTONS — Final Professional Style
+---------------------------------------------------- */
+
+.btn,
+.start-btn,
+.btn.primary,
+.btn.calculate {
+  background: linear-gradient(135deg, #1abc9c, #17a589);
+  color: white;
+  padding: 14px 30px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 0.25s ease;
+  box-shadow: 0px 6px 14px rgba(26, 188, 156, 0.35);
+}
+
+.btn:hover,
+.start-btn:hover,
+.btn.primary:hover,
+.btn.calculate:hover {
+  background: linear-gradient(135deg, #17a589, #14997b);
+  transform: translateY(-3px);
+  box-shadow: 0px 8px 18px rgba(26, 188, 156, 0.45);
+}
+
+.btn:active,
+.start-btn:active,
+.btn.primary:active,
+.btn.calculate:active {
+  transform: scale(0.97);
+}
+
+/* Reset button */
+.btn.reset {
+  background: #ff6b81;
+  color: white;
+}
+
+.btn.reset:hover {
+  background: #ff4d68;
+  transform: translateY(-3px);
+}
+
+
+/* ----------------------------------------------------
+   RESULT
+---------------------------------------------------- */
+
+.result {
+  margin-top: 25px;
+  padding: 20px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.55);
+  color: #035c63;
+  font-weight: 700;
+}
+
+.category {
+  margin-top: 12px;
+  padding: 10px 18px;
+  border-radius: 50px;
+  font-size: 14px;
+}
+
+.normal-weight {
+  background: #2ecc71;
+  color: white;
+}
+.underweight {
+  background: #3498db;
+  color: white;
+}
+.overweight {
+  background: #f1c40f;
+  color: #664d00;
+}
+.obesity {
+  background: #e74c3c;
+  color: white;
+}
+
+.fade-in {
+  animation: fade 0.7s ease;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ----------------------------------------------------
+   HOME PAGE
+---------------------------------------------------- */
+
+.landing {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-title {
   font-size: 2.5rem;
-  margin-bottom: 20px;
+  color: #1269ba;
+  font-weight: 800;
 }
 
-.home button {
-  padding: 12px 25px;
+.hero-subtitle {
   font-size: 1.2rem;
-  background-color: #ff5722;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  margin: 15px 0 30px;
+  opacity: 0.8;
+  color: #035c63;
 }
 
-.home button:hover {
-  background-color: #ff784e;
-  transform: scale(1.1);
-}
 
-.home a {
-  margin-top: 20px;
-  display: inline-block;
-  font-size: 1.1rem;
-  text-decoration: none;
-  color: #ff5722;
-  transition: color 0.3s ease;
-}
+/* ----------------------------------------------------
+   FOOTER
+---------------------------------------------------- */
 
-.home a:hover {
-  color: #ff784e;
-}
-
- .calculator {
+.footer {
+  margin-top: 40px;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.6); 
-  padding: 50px;
-  border-radius: 15px;
-  width: 70%;
-  max-width: 500px;
-  margin-top: 30px;
+  font-size: 14px;
+  color: #035c63;
+  font-weight: 600;
+  opacity: 0.85;
+}
+```
+
+### bmi.jsx:
+```
+import React, { useState } from "react";
+
+function BMICalculator() {
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
+  const [bmi, setBmi] = useState(null);
+  const [category, setCategory] = useState("");
+
+  const calculateBMI = () => {
+    if (weight && height) {
+      const heightInMeters = height / 100;
+      const bmiValue = (weight / (heightInMeters * heightInMeters)).toFixed(2);
+      setBmi(bmiValue);
+
+      if (bmiValue < 18.5) setCategory("Underweight");
+      else if (bmiValue < 25) setCategory("Normal weight");
+      else if (bmiValue < 30) setCategory("Overweight");
+      else setCategory("Obesity");
+    }
+  };
+
+  const reset = () => {
+    setWeight("");
+    setHeight("");
+    setBmi(null);
+    setCategory("");
+  };
+
+  return (
+    <div className="container">
+      <h1 className="title">BMI Calculator</h1>
+      <div className="card glass-card">
+        <div className="input-group">
+          <label>Weight (kg)</label>
+          <input
+            type="number"
+            value={weight}
+            onChange={(e) => setWeight(e.target.value)}
+            placeholder="Enter weight"
+          />
+        </div>
+
+        <div className="input-group">
+          <label>Height (cm)</label>
+          <input
+            type="number"
+            value={height}
+            onChange={(e) => setHeight(e.target.value)}
+            placeholder="Enter height"
+          />
+        </div>
+
+        <div className="buttons">
+          <button className="btn calculate" onClick={calculateBMI}>
+            Calculate
+          </button>
+          <button className="btn reset" onClick={reset}>
+            Reset
+          </button>
+        </div>
+
+        {bmi && (
+          <div className="result fade-in">
+            <h2>Your BMI: {bmi}</h2>
+            <p className={`category ${category.toLowerCase().replace(" ", "-")}`}>
+              {category}
+            </p>
+          </div>
+        )}
+      </div>
+      <p className="footer">Designed by Austin 🤍</p>
+    </div>
+  );
 }
 
-.calculator h2 {
-  font-size: 2.2rem;
-  margin-bottom: 20px;
-  color: #ffeb3b;
+export default BMICalculator;
+```
+
+### Home.jsx:
+```
+import React from "react";
+import { Link } from "react-router-dom";
+
+function Home() {
+  return (
+    <div className="landing">
+      <div className="hero">
+        <h1 className="hero-title">Track Your Health Easily</h1>
+        <p className="hero-subtitle">
+          Calculate your BMI instantly and understand your health category.
+        </p>
+        <Link to="/calculator">
+          <button className="btn primary">Start Calculating</button>
+        </Link>
+      </div>
+      <p className="footer">Designed by Austin 🤍</p>
+    </div>
+  );
 }
 
-.calculator form {
-  margin-bottom: 20px;
-}
-
-.calculator label {
-  font-size: 1.2rem;
-  margin-right: 10px;
-}
-
-.calculator input {
-  padding: 10px;
-  font-size: 1rem;
-  margin: 15px 0;
-  border-radius: 5px;
-  border: 2px solid #ddd;
-  width: 80%;
-  max-width: 300px;
-  text-align: center;
-  background-color: #fff;
-}
-
-.calculator button {
-  padding: 12px 25px;
-  font-size: 1.2rem;
-  background-color: #4CAF50;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.calculator button:hover {
-  background-color: #45a049;
-  transform: scale(1.05);
-}
-
-.calculator h3 {
-  font-size: 1.5rem;
-  margin-top: 20px;
-  color: #ffeb3b;
-}
-
-.calculator p {
-  font-size: 1.2rem;
-  margin-top: 10px;
-  color: #f0f0f0;
-}
-
-.calculator a {
-  margin-top: 20px;
-  display: block;
-  font-size: 1.2rem;
-  text-decoration: none;
-  color: #4CAF50;
-  transition: color 0.3s ease;
-}
-
-.calculator a:hover {
-  color: #45a049;
-}
-
- @media screen and (max-width: 768px) {
-  .home, .calculator {
-    width: 90%;
-    padding: 30px;
-  }
-
-  .home h1 {
-    font-size: 2rem;
-  }
-
-  .calculator h2 {
-    font-size: 1.8rem;
-  }
-
-  .calculator label, .calculator input {
-    font-size: 1rem;
-  }
-}
+export default Home;
 ```
 
 
 ## OUTPUT
+<img width="1264" height="595" alt="image" src="https://github.com/user-attachments/assets/cc92a442-e974-41d2-8044-4afbb66ccb55" />
 
-![alt text](<Screenshot 2026-03-25 132256.png>) ![alt text](<Screenshot 2026-03-25 132318.png>)
+<img width="1265" height="597" alt="image" src="https://github.com/user-attachments/assets/aa96a487-a76f-40ae-bb4d-3933ffd4ef0f" />
 
+<img width="1267" height="600" alt="image" src="https://github.com/user-attachments/assets/21ed26a1-3135-4781-8e64-b22a86a4e1e5" />
 
+<img width="1264" height="471" alt="image" src="https://github.com/user-attachments/assets/d4f3ccc9-ec7f-4155-9697-9929e91ef7a2" />
 
 ## RESULT
 The program for creating BMI Calculator using React Router is executed successfully.
-
-
