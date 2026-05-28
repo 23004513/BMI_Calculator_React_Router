@@ -1,6 +1,6 @@
 # Ex06 BMI Calculator
 ## Date: 28-05-26
-# NAME N NAVYA SREE
+# NAME N.NAVYA SREE
 ## AIM
 To create a BMI calculator using React Router 
 
